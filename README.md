@@ -10,5 +10,5 @@ Whether I try a novel approach, a new programming language, handle edge cases or
 
 ## `ts/*`
 
-For TypeScript solutions, generally you can run `$ npx ts-node lib/day-XX/exec.ts` from the project root to get results for both parts of each day.
+For TypeScript solutions, generally you can run `$ npx ts-node lib/day-XX/exec.ts` from the `ts/` directory to get results for both parts of each day.
 
