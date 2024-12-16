@@ -4,16 +4,16 @@ const calc = (
   y: number,
   offset: number,
   a: string[][]
-): number => {
-  if (x >= a[0].length || y >= a.length) {
-    return 0
+): boolean => {
+  if (x >= a[0].length || y >= a.length || x < 0 || y < 0) {
+    return false
   }
 
   if (a[y][x] === target[offset]) {
-    return 1
+    return true
   }
 
-  return 0
+  return false
 }
 
 const search = (
@@ -23,18 +23,22 @@ const search = (
   a: string[][]
 ): number => {
   const len = target.length
-  let result = [1, 1, 1, 1]
+  let result: boolean[] = new Array(8).fill(true)
 
   for (let offset = 0; offset < len; offset++) {
-    // VER
-    result[0] = calc(target, startX + offset, startY, offset, a)
-
     // HOR
-    result[1] = calc(target, startX, startY + offset, offset, a)
+    result[0] = result[0] && calc(target, startX + offset, startY, offset, a)
+    result[1] = result[1] && calc(target, startX - offset, startY, offset, a)
+
+    // VER
+    result[2] = result[2] && calc(target, startX, startY + offset, offset, a)
+    result[3] = result[3] && calc(target, startX, startY - offset, offset, a)
 
     // DIA
-    result[2] = calc(target, startX + offset, startY + offset, offset, a)
-    result[3] = calc(target, startX - offset, startY + offset, offset, a)
+    result[4] = result[4] && calc(target, startX + offset, startY + offset, offset, a)
+    result[5] = result[5] && calc(target, startX - offset, startY + offset, offset, a)
+    result[6] = result[6] && calc(target, startX + offset, startY - offset, offset, a)
+    result[7] = result[7] && calc(target, startX - offset, startY - offset, offset, a)
   }
 
   return result.filter((e) => e).length
@@ -45,13 +49,10 @@ const part1 = (input: string[][]) => {
   let xLen = input[0].length
   let yLen = input.length
   const searchTerm = "XMAS".split("")
-  const searchTermReverse = searchTerm.slice(0).reverse()
-  const searchLen = searchTerm.length
 
-  for (let x = 0; x < xLen - searchLen; x++) {
-    for (let y = 0; y < yLen - searchLen; y++) {
+  for (let x = 0; x < xLen; x++) {
+    for (let y = 0; y < yLen; y++) {
       count += search(searchTerm, x, y, input)
-      count += search(searchTermReverse, x, y, input)
     }
   }
 

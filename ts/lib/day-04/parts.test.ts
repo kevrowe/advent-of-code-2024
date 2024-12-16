@@ -36,8 +36,7 @@ S.S.S.S.SS
 
     expect(search("XMAS".split(""), 5, 0, input)).toBe(1)
     expect(search("XMAS".split(""), 0, 4, input)).toBe(1)
-    // This assertion is weird
-    expect(search("XMAS".split(""), 6, 6, input)).toBe(1)
+    expect(search("XMAS".split(""), 3, 9, input)).toBe(2)
   })
 })
 
