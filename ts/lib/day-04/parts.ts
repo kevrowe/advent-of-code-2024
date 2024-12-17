@@ -16,6 +16,32 @@ const calc = (
   return false
 }
 
+const searchX = (
+  target: string[],
+  x: number,
+  y: number,
+  a: string[][]
+): number => {
+  if (x >= a[0].length - 1 || y >= a.length - 1 || x < 1 || y < 1) {
+    return 0
+  }
+
+  if (a[y][x] !== target[1]) {
+    return 0;
+  }
+
+  if (((a[y + 1][x + 1] === target[2] && a[y - 1][x - 1] === target[0])
+    || (a[y + 1][x + 1] === target[0] && a[y - 1][x - 1] === target[2]))
+    &&
+    ((a[y + 1][x - 1] === target[2] && a[y - 1][x + 1] === target[0])
+      || (a[y + 1][x - 1] === target[0] && a[y - 1][x + 1] === target[2]))
+  ) {
+    return 1;
+  }
+
+  return 0
+}
+
 const search = (
   target: string[],
   startX: number,
@@ -59,4 +85,19 @@ const part1 = (input: string[][]) => {
   return count
 }
 
-export { search, part1 }
+const part2 = (input: string[][]) => {
+  let count = 0
+  let xLen = input[0].length
+  let yLen = input.length
+  const searchTerm = "MAS".split("")
+
+  for (let x = 1; x < xLen - 1; x++) {
+    for (let y = 0; y < yLen - 1; y++) {
+      count += searchX(searchTerm, x, y, input)
+    }
+  }
+
+  return count
+}
+
+export { search, searchX, part1, part2 }

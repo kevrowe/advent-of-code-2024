@@ -1,4 +1,4 @@
-import { search, part1 } from "./parts"
+import { search, part1, searchX, part2 } from "./parts"
 
 describe("search", () => {
   it("should find 1 horizontal forwards instance", () => {
@@ -68,3 +68,43 @@ MXMXAXMASX`
     expect(part1(input)).toBe(18)
   })
 })
+
+describe('searchX', () => {
+  it('should find 1 instance', () => {
+    const input = `M.M
+.A.
+S.S`.split('\n').map(r => r.split(''))
+
+    expect(searchX('MAS'.split(''), 1, 1, input)).toBe(1)
+  })
+})
+describe('part2', () => {
+  it('should find 1 instance', () => {
+    const input = `.M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+..........`.split('\n').map(r => r.split(''))
+
+    expect(part2(input)).toBe(9)
+  })
+  it('should find 1 instance', () => {
+    const input = `MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX`.split('\n').map(r => r.split(''))
+
+    expect(part2(input)).toBe(9)
+  })
+});
